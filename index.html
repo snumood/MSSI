@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>MSSI (한국어판) 채점기</title>
+  <title>기분안정성평가</title>
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
   <style>
     :root {
@@ -13,52 +13,50 @@
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 20px 16px; line-height: 1.5; }
     .container { max-width: 720px; margin: 0 auto; }
-    header { text-align: left; margin-bottom: 32px; padding: 24px; background: var(--card-bg); border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-    h1 { font-size: 1.75rem; font-weight: 700; color: var(--text-color); margin: 0 0 16px 0; }
-    .description { color: var(--gray-color); font-size: 0.95rem; line-height: 1.6; }
-
-    .patient-info-card { background: var(--card-bg); border-radius: 16px; padding: 24px; margin-bottom: 20px; border: 2px solid var(--primary-light); }
-    .text-input { width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #E5E7EB; font-size: 1rem; transition: border-color 0.2s; }
-    .text-input:focus { outline: none; border-color: var(--primary-color); }
-
-    .question-card { background: var(--card-bg); border-radius: 16px; padding: 24px 20px; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); transition: transform 0.2s ease; }
-    .question-title { font-size: 1.15rem; font-weight: 600; margin-bottom: 16px; display: flex; align-items: baseline; }
-    .question-number { color: var(--primary-color); font-weight: 800; margin-right: 10px; font-size: 1.2rem; }
+    header { text-align: left; margin-bottom: 24px; padding: 24px; background: var(--card-bg); border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+    h1 { font-size: 1.5rem; font-weight: 700; color: var(--text-color); margin: 0 0 12px 0; }
+    .instruction-box { background: #fdfdfd; padding: 15px; border-left: 4px solid var(--primary-color); font-size: 0.9rem; color: #444; margin-top: 10px; }
     
-    .gate-question { display: flex; gap: 12px; margin-bottom: 16px; }
-    .gate-label { flex: 1; display: block; padding: 14px 16px; border: 2px solid #E5E7EB; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; font-size: 1rem; font-weight: 600; text-align: center; }
+    .patient-info-card { background: var(--card-bg); border-radius: 16px; padding: 24px; margin-bottom: 20px; border: 2px solid var(--primary-light); }
+    .input-label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.95rem; }
+    .text-input { width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #E5E7EB; font-size: 1rem; }
+
+    .question-card { background: var(--card-bg); border-radius: 16px; padding: 24px 20px; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+    .question-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 16px; }
+    .question-number { color: var(--primary-color); font-weight: 800; margin-right: 8px; }
+    
+    .gate-question { display: flex; gap: 12px; margin-bottom: 10px; }
+    .gate-label { flex: 1; display: block; padding: 14px; border: 2px solid #E5E7EB; border-radius: 12px; cursor: pointer; text-align: center; font-weight: 600; }
     .gate-radio { display: none; }
-    .gate-radio:checked + .gate-label { border-color: var(--primary-color); background-color: var(--primary-light); color: var(--primary-color); box-shadow: 0 2px 4px rgba(79, 70, 229, 0.1); }
+    .gate-radio:checked + .gate-label { border-color: var(--primary-color); background-color: var(--primary-light); color: var(--primary-color); }
     
     .sub-questions { display: none; margin-top: 20px; padding-top: 20px; border-top: 1px dashed #E5E7EB; }
-    .sub-question-title { font-size: 1rem; font-weight: 600; color: var(--text-color); margin-bottom: 12px; }
-    .options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
-    .option-label { position: relative; display: flex; align-items: center; padding: 14px 16px; background-color: var(--bg-color); border: 2px solid transparent; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; font-size: 0.95rem; }
-    .option-radio { appearance: none; -webkit-appearance: none; min-width: 20px; height: 20px; border: 2px solid var(--gray-color); border-radius: 50%; margin-right: 12px; position: relative; }
-    .option-radio:checked { border-color: var(--primary-color); background-color: var(--primary-color); }
-    .option-radio:checked::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 8px; height: 8px; background-color: white; border-radius: 50%; }
-    .option-label:has(.option-radio:checked) { background-color: var(--primary-light); border-color: var(--primary-color); font-weight: 600; color: var(--primary-color); }
+    .sub-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 12px; color: #555; }
+    .options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+    .option-label { display: flex; align-items: center; padding: 12px 16px; background: var(--bg-color); border-radius: 10px; cursor: pointer; font-size: 0.9rem; }
+    .option-radio { margin-right: 12px; width: 18px; height: 18px; }
+    .option-label:has(.option-radio:checked) { background: var(--primary-light); color: var(--primary-color); font-weight: 600; }
 
-    .btn-submit { display: block; width: 100%; padding: 18px; background-color: var(--primary-color); color: white; border: none; border-radius: 16px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 40px; }
-    .btn-submit:active { transform: scale(0.98); background-color: #4338CA; }
-    .btn-submit:disabled { background-color: #9CA3AF; cursor: not-allowed; }
-
-    #result { display: none; margin-top: 40px; padding: 32px 24px; background: var(--card-bg); border-radius: 24px; text-align: center; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
-    .score-display { font-size: 4rem; font-weight: 800; line-height: 1; margin: 16px 0 24px; color: var(--primary-color); }
-    .result-message { padding: 20px; border-radius: 16px; font-size: 1.1rem; background-color: #F3F4F6; text-align: left; }
+    .btn-submit { width: 100%; padding: 18px; background: var(--primary-color); color: white; border: none; border-radius: 16px; font-size: 1.1rem; font-weight: 700; cursor: pointer; margin-top: 20px; }
+    
+    #result { display: none; background: white; padding: 30px 20px; border-radius: 20px; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.1); margin-top: 20px; }
+    .rank-box { background: #f8fafc; padding: 20px; border-radius: 15px; margin-top: 20px; text-align: left; line-height: 1.7; border: 1px solid #e2e8f0; }
+    .highlight { color: var(--primary-color); font-weight: 700; }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <h1>MSSI (Mood Instability Scale)</h1>
-      <p class="description">본 검사는 당신의 최근 2주 동안의 모습을 알아보기 위한 것입니다.</p>
+      <h1>기분안정성평가</h1>
+      <div class="instruction-box">
+        당신의 최근 2주 동안의 모습을 알아보는 검사입니다. 증상이 지난 2주간 있었으면 <strong>"예"</strong>라고 답해 주시고, 각 문항마다 <strong>증상의 빈도(A)</strong>와 <strong>심한 정도(B)</strong>를 표시해 주십시오. 2주간 증상이 없었다면 <strong>"아니오"</strong>로 답한 뒤 다음 문항으로 넘어가 주십시오.
+      </div>
     </header>
-    
+
     <form id="mssiForm">
       <div class="patient-info-card">
-        <label class="input-label" for="patientID">등록번호 (또는 이니셜+생년월일)</label>
-        <input type="text" id="patientID" class="text-input" placeholder="예: 12345678" required>
+        <label class="input-label">등록번호 또는 이니셜+생년월일</label>
+        <input type="text" id="patientID" class="text-input" placeholder="예: 43445678 또는 HGD19990305" required>
       </div>
 
       <div id="questions-container"></div>
@@ -66,18 +64,19 @@
       <div class="question-card">
         <div class="question-title"><span class="question-number">21</span>우울하더라도 행동이 느려지진 않았다.</div>
         <div class="gate-question">
-          <input type="radio" name="q21_gate" value="0" class="gate-radio" id="q21_no" required><label for="q21_no" class="gate-label">아니오 (느려졌다)</label>
-          <input type="radio" name="q21_gate" value="1" class="gate-radio" id="q21_yes"><label for="q21_yes" class="gate-label">예 (느려지지 않았다)</label>
+          <input type="radio" name="q21_gate" value="0" class="gate-radio" id="q21_no"><label for="q21_no" class="gate-label">(0) 아니오 (느려졌다)</label>
+          <input type="radio" name="q21_gate" value="1" class="gate-radio" id="q21_yes"><label for="q21_yes" class="gate-label">(1) 예 (느려지지 않았다)</label>
         </div>
       </div>
 
-      <button type="submit" id="submitBtn" class="btn-submit">결과 확인 및 데이터 저장</button>
+      <button type="submit" id="submitBtn" class="btn-submit">결과 제출하기</button>
     </form>
 
     <div id="result">
-      <div style="font-weight: 600; color: var(--gray-color);">MSSI 총점 (1-20번)</div>
-      <div id="totalScore" class="score-display">0</div>
-      <div id="resultMessage" class="result-message"></div>
+      <h2 style="margin-top:0">검사 결과</h2>
+      <div style="font-size:1.2rem">나의 기분안정성 점수: <span id="totalScore" class="highlight" style="font-size:2rem">0</span>점</div>
+      <div id="rankResult" class="rank-box"></div>
+      <button onclick="location.reload()" style="margin-top:20px; padding:10px 20px; border-radius:10px; border:none; background:#94a3b8; color:white; cursor:pointer">다시 검사하기</button>
     </div>
   </div>
 
@@ -89,108 +88,123 @@
       "사소한 자극에도 눈물이 나거나 우는 날이 많았다.", "사소한 일에도 흥분되었다.", "기분이 들뜨기도 했다.", "평안하다고 느낀 적이 없다.",
       "불안하고 초조했다.", "갑자기 에너지가 생겨 할 일을 정하고 행동으로 옮기기도 했다.", "말이 많고 빨라졌다.", "생각이 많아서 잠들기 힘들었다.",
       "생각이 꼬리에 꼬리를 물고 이어졌다.", "의기양양하거나 과대한 기분을 느꼈다.", "긴장감을 느꼈다.", "잠에 들 생각을 못한 채 밤을 새거나 늦게 잤다.",
-      "나에게 안 좋은 결과를 가져올 것을 알고도 몰입하는 것이 있었다.", "죽고 싶다는 생각이 들었다.", "충동적으로 모든 일을 그만두고 싶어졌다", "자해를 하고 싶다는 생각이 들었다."
-    ];
-
-    const freqOptions = [
-      "1. 하루 미만(몇시간 지속)", "2. 하루 이상 일주일 미만", "3. 일주일 이상 2주 미만", "4. 매일 증상이 있었다"
-    ];
-
-    const sevOptions = [
-      "1. 약간", "2. 상당히", "3. 심하게"
+      "나에게 안 좋은 결과를 가져올 것을 알고도 몰입하는 것이 있었다.", "죽고 싶다는 생각이 들었다.", "충동적으로 모든 일을 그만두고 싶어졌다.", "자해를 하고 싶다는 생각이 들었다."
     ];
 
     const container = document.getElementById('questions-container');
     questions.forEach((q, i) => {
       const n = i + 1;
-      let freqHTML = freqOptions.map((opt, idx) => `
-        <label class="option-label">
-          <input type="radio" name="q${n}_freq" value="${idx+1}" class="option-radio"><span>${opt}</span>
-        </label>`).join('');
-      
-      let sevHTML = sevOptions.map((opt, idx) => `
-        <label class="option-label">
-          <input type="radio" name="q${n}_sev" value="${idx+1}" class="option-radio"><span>${opt}</span>
-        </label>`).join('');
-
       container.innerHTML += `
-        <div class="question-card">
+        <div class="question-card" id="card_q${n}">
           <div class="question-title"><span class="question-number">${n}</span>${q}</div>
           <div class="gate-question">
-            <input type="radio" name="q${n}_gate" value="0" class="gate-radio" id="q${n}_no" required><label for="q${n}_no" class="gate-label">아니오</label>
-            <input type="radio" name="q${n}_gate" value="1" class="gate-radio" id="q${n}_yes"><label for="q${n}_yes" class="gate-label">예</label>
+            <input type="radio" name="q${n}_gate" value="0" class="gate-radio" id="q${n}_no"><label for="q${n}_no" class="gate-label">(0) 아니오</label>
+            <input type="radio" name="q${n}_gate" value="1" class="gate-radio" id="q${n}_yes"><label for="q${n}_yes" class="gate-label">(1) 예</label>
           </div>
           <div class="sub-questions" id="sq-q${n}">
-            <div class="sub-question-title">A. 얼마나 자주 있었습니까? (빈도)</div>
-            <div class="options">${freqHTML}</div>
-            <div class="sub-question-title">B. 얼마나 심했습니까? (심각도)</div>
-            <div class="options">${sevHTML}</div>
+            <div class="sub-title">A. 얼마나 자주 있었습니까? (증상의 빈도)</div>
+            <div class="options">
+              ${[1,2,3,4].map(v => `<label class="option-label"><input type="radio" name="q${n}_freq" value="${v}" class="option-radio"><span>(${v}) ${["1일 미만(몇 시간 지속)","1일 이상 1주 미만","1주 이상 2주 미만","매일 증상이 있었다"][v-1]}</span></label>`).join('')}
+            </div>
+            <div class="sub-title">B. 얼마나 심했습니까? (증상의 심한 정도)</div>
+            <div class="options">
+              ${[1,2,3].map(v => `<label class="option-label"><input type="radio" name="q${n}_sev" value="${v}" class="option-radio"><span>(${v}) ${["약간 (증상은 있었지만 힘들지 않았다)","상당히 (매우 불쾌하지만 참을 수 있었다)","심하게 (정말 견디기 힘들었다)"][v-1]}</span></label>`).join('')}
+            </div>
           </div>
         </div>`;
     });
 
-    // '예' 선택 시 하위 질문 필수화 및 표시
+    // 이벤트 리스너: 예 선택 시 하위 항목 노출
     document.addEventListener('change', (e) => {
       if (e.target.classList.contains('gate-radio')) {
         const qNum = e.target.name.split('_')[0];
         const subDiv = document.getElementById(`sq-${qNum}`);
-        const subRadios = subDiv.querySelectorAll('.option-radio');
-        
         if (e.target.value === '1') {
           subDiv.style.display = 'block';
-          subRadios.forEach(r => r.required = true);
         } else {
           subDiv.style.display = 'none';
-          subRadios.forEach(r => { r.required = false; r.checked = false; });
+          subDiv.querySelectorAll('input').forEach(r => r.checked = false);
         }
       }
     });
 
+    // 정규분포 확률 계산 함수 (NORMDIST 대용)
+    function normDist(x, mean, std) {
+      return (1 + erf((x - mean) / (Math.sqrt(2) * std))) / 2;
+    }
+    function erf(x) {
+      const a1 = 0.254829592, a2 = -0.284496736, a3 = 1.421413741, a4 = -1.453152027, a5 = 1.061405429, p = 0.3275911;
+      const sign = (x < 0) ? -1 : 1; x = Math.abs(x);
+      const t = 1.0 / (1.0 + p * x);
+      const y = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
+      return sign * y;
+    }
+
     document.getElementById('mssiForm').addEventListener('submit', async function(e) {
       e.preventDefault();
+      
+      // 누락 확인
+      for(let i=1; i<=21; i++) {
+        const gate = document.querySelector(`input[name="q${i}_gate"]:checked`);
+        if(!gate) {
+          alert(`${i}번 문항의 "예/아니오"를 선택해 주세요.`);
+          document.getElementById(`card_q${i}`)?.scrollIntoView({behavior:'smooth'});
+          return;
+        }
+        if(gate.value === '1' && i <= 20) {
+          const f = document.querySelector(`input[name="q${i}_freq"]:checked`);
+          const s = document.querySelector(`input[name="q${i}_sev"]:checked`);
+          if(!f || !s) {
+            alert(`${i}번 문항의 빈도와 심한 정도를 모두 선택해 주세요.`);
+            return;
+          }
+        }
+      }
+
       const btn = document.getElementById('submitBtn');
-      btn.disabled = true; btn.textContent = "데이터 전송 및 저장 중...";
+      btn.disabled = true; btn.textContent = "제출 중...";
 
       let totalScore = 0;
       const answers = {};
-      const patientID = document.getElementById('patientID').value;
+      const pID = document.getElementById('patientID').value;
 
       for (let i = 1; i <= 20; i++) {
-        const gate = document.querySelector(`input[name="q${i}_gate"]:checked`).value;
-        const gateText = gate === '1' ? "1. 예" : "0. 아니오";
+        const gVal = document.querySelector(`input[name="q${i}_gate"]:checked`).value;
         let fText = "", sText = "";
-
-        if (gate === '1') {
+        if (gVal === '1') {
           const fEl = document.querySelector(`input[name="q${i}_freq"]:checked`);
           const sEl = document.querySelector(`input[name="q${i}_sev"]:checked`);
           totalScore += (parseInt(fEl.value) * parseInt(sEl.value));
           fText = fEl.parentElement.textContent.trim();
           sText = sEl.parentElement.textContent.trim();
         }
-        answers["q"+i] = { gate: gateText, freq: fText, sev: sText };
+        answers["q"+i] = { gate: gVal==='1'?"1. 예":"0. 아니오", freq: fText, sev: sText };
       }
-
       const q21Val = document.querySelector(`input[name="q21_gate"]:checked`).value;
-      const q21Text = q21Val === '1' ? "1. 예" : "0. 아니오";
-      answers["q21"] = q21Text;
+      answers["q21"] = q21Val === '1' ? "1. 예" : "0. 아니오";
+
+      // 등수 계산 (제공된 파라미터 적용)
+      const rankPatient = Math.round((1 - normDist(totalScore, 50.0308, 37.18785)) * 100);
+      const rankNormal = Math.round((1 - normDist(totalScore, 30, 20)) * 100);
 
       try {
         await fetch(GOOGLE_SCRIPT_URL, {
           method: 'POST', mode: 'no-cors',
-          body: JSON.stringify({ patientID, totalScore, answers })
+          body: JSON.stringify({ patientID: pID, totalScore, answers })
         });
+        
         document.getElementById('mssiForm').style.display = 'none';
         document.getElementById('result').style.display = 'block';
         document.getElementById('totalScore').textContent = totalScore;
-        document.getElementById('resultMessage').innerHTML = `
-          <strong>등록번호:</strong> ${patientID}<br>
-          <strong>21번 결과:</strong> ${q21Text === "1. 예" ? "행동 느려지지 않음" : "행동 느려짐"}<br><br>
-          <span style="color:var(--primary-color)">✓ 검사가 완료되었습니다. 감사합니다.</span>
+        document.getElementById('rankResult').innerHTML = `
+          당신의 기분안정성 점수는 <span class="highlight">${totalScore}점</span>입니다.<br><br>
+          분당서울대학교병원 기분장애클리닉 환자 100명 중에 <span class="highlight">${rankPatient}등</span>,<br>
+          정신건강의학과에 방문하지 않는 사람들 100명 중에 <span class="highlight">${rankNormal}등</span> 정도의 점수입니다.
         `;
         window.scrollTo(0,0);
       } catch (err) {
-        alert("전송 중 오류가 발생했습니다. 다시 시도해 주세요.");
-        btn.disabled = false; btn.textContent = "다시 시도하기";
+        alert("저장 중 오류가 발생했습니다. 다시 시도해 주세요.");
+        btn.disabled = false; btn.textContent = "다시 제출하기";
       }
     });
   </script>
