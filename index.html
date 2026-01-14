@@ -197,8 +197,9 @@
         document.getElementById('result').style.display = 'block';
         document.getElementById('totalScore').textContent = totalScore;
         document.getElementById('rankResult').innerHTML = `
-          당신의 기분안정성 점수는 <span class="highlight">${totalScore}점</span>입니다.<br><br>
-          분당서울대학교병원 기분장애클리닉 환자 100명 중에 <span class="highlight">${rankPatient}등</span>,<br>
+          당신의 기분안정성 점수는 <span class="highlight">${totalScore}점</span>입니다. 점수가 높을수록 기분이 불안정한 상태를 의미합니다.<br><br>
+          점수는 최저 0점, 최고 240점, 기분장애클리닉환자의 평균점수는 50점, 정신건강의학과에 방문하지 않는 분들의 평균점수는 30점 정도입니다.<br>
+          당신의 점수는 분당서울대학교병원 기분장애클리닉 환자 100명 중에 <span class="highlight">${rankPatient}등</span>,<br>
           정신건강의학과에 방문하지 않는 사람들 100명 중에 <span class="highlight">${rankNormal}등</span> 정도의 점수입니다.
         `;
         window.scrollTo(0,0);
@@ -210,3 +211,4 @@
   </script>
 </body>
 </html>
+
